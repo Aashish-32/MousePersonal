@@ -27,6 +27,7 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
+import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 
@@ -430,27 +431,40 @@ class MouseService : AccessibilityService() {
 
     private fun handleKeyInput(key: String) {
         val rootNode = rootInActiveWindow ?: return
-        val focusedNode = rootNode.findFocus(AccessibilityNodeInfo.FOCUS_INPUT) ?: return
+        val focusedNode = rootNode.findFocus(AccessibilityNodeInfo.FOCUS_INPUT)
 
         when (key) {
             "Del" -> {
-                val currentText = focusedNode.text?.toString() ?: ""
-                if (currentText.isNotEmpty()) {
-                    val bundle = Bundle()
-                    bundle.putCharSequence(
-                        AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE,
-                        currentText.substring(0, currentText.length - 1)
-                    )
-                    focusedNode.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, bundle)
+                if (focusedNode != null) {
+                    val currentText = focusedNode.text?.toString() ?: ""
+                    if (currentText.isNotEmpty()) {
+                        val bundle = Bundle()
+                        bundle.putCharSequence(
+                            AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE,
+                            currentText.substring(0, currentText.length - 1)
+                        )
+                        focusedNode.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, bundle)
+                    }
+                } else {
+                    performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK) // Fallback or handle back button
                 }
             }
-            "Space" -> appendText(focusedNode, " ")
-            "Enter" -> {
-                // Enterprise usually triggers a search or next field, hard to simulate perfectly
-                // but we can try SET_TEXT with \n if it's multiline or just dispatch a key event
-                appendText(focusedNode, "\n")
+            "Space" -> {
+                if (focusedNode != null) appendText(focusedNode, " ")
             }
-            else -> appendText(focusedNode, key)
+            "Enter" -> {
+                // For AccessibilityService, we typically use performGlobalAction or rely on input method.
+                // Since this isn't an IME, we try to find the "Done" or "Search" action if it's a specific field
+                // Otherwise, SET_TEXT with \n is a common fallback
+                focusedNode?.let {
+                    appendText(it, "\n")
+                }
+            }
+            else -> {
+                if (focusedNode != null) {
+                    appendText(focusedNode, key)
+                }
+            }
         }
     }
 
