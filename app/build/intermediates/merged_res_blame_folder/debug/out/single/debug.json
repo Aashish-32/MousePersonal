@@ -1,0 +1,6 @@
+[
+    {
+        "merged": "com.example.mousepad.app-merged_res-29:/xml_accessibility_service_config.xml.flat",
+        "source": "com.example.mousepad.app-main-31:/xml/accessibility_service_config.xml"
+    }
+]

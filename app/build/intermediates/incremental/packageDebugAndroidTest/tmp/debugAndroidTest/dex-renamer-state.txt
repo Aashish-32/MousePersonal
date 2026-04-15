@@ -1,0 +1,7 @@
+#Tue Apr 14 21:37:31 NPT 2026
+base.0=C\:\\mouseAPk\\app\\build\\intermediates\\dex\\debugAndroidTest\\mergeProjectDexDebugAndroidTest\\0\\classes.dex
+base.1=C\:\\mouseAPk\\app\\build\\intermediates\\dex\\debugAndroidTest\\mergeProjectDexDebugAndroidTest\\14\\classes.dex
+path.0=0/classes.dex
+path.1=14/classes.dex
+renamed.0=classes.dex
+renamed.1=classes2.dex
