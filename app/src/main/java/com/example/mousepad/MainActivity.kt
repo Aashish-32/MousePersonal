@@ -102,7 +102,7 @@ class MainActivity : Activity() {
         })
 
         val sensitivityProgress = ((initSensitivity * 10f) - 1f).toInt().coerceIn(0, 100)
-        slidersContainer.addView(createVerticalSlider("Speed", 100, sensitivityProgress) { progress ->
+        slidersContainer.addView(createVerticalSlider("Speed", 100, sensitivityProgress, isSpeed = true) { progress ->
             val sensitivity = (progress + 1) / 10.0f
             sendBroadcast(Intent("UPDATE_MOUSE_SETTINGS").setPackage(packageName).putExtra("sensitivity", sensitivity))
         })
@@ -122,16 +122,16 @@ class MainActivity : Activity() {
         label: String,
         maxVal: Int,
         initialProgress: Int,
+        isSpeed: Boolean = false,
         onProgress: (Int) -> Unit
     ): View {
         val container = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER_HORIZONTAL
             layoutParams = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
+                dp(60f), // Slightly wider to accommodate buttons if needed
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
-            setPadding(0, 0, 0, 0)
         }
 
         val title = TextView(this).apply {
@@ -141,16 +141,39 @@ class MainActivity : Activity() {
         }
         container.addView(title)
 
-        // Rotated SeekBar wrapped in a fixed-size FrameLayout so the rotation
-        // doesn't collapse the slot.
-        val frameSizeShort = dp(40f)   // narrow dimension of the slot
-        val frameSizeLong = dp(200f)   // tall dimension (== seekbar length pre-rotation)
+        val valueText = if (isSpeed) {
+            TextView(this).apply {
+                text = String.format("%.1f", (initialProgress + 1) / 10.0f)
+                textSize = 10f
+                gravity = Gravity.CENTER
+            }
+        } else null
+        valueText?.let { container.addView(it) }
+
+        if (isSpeed) {
+            val plusBtn = Button(this).apply {
+                text = "+"
+                setPadding(0, 0, 0, 0)
+                layoutParams = LinearLayout.LayoutParams(dp(40f), dp(40f))
+            }
+            container.addView(plusBtn)
+            plusBtn.setOnClickListener {
+                val sb = container.findViewWithTag<SeekBar>("seekbar")
+                if (sb.progress < sb.max) {
+                    sb.progress += 1
+                }
+            }
+        }
+
+        val frameSizeShort = dp(40f)
+        val frameSizeLong = dp(200f)
 
         val frame = FrameLayout(this).apply {
             layoutParams = LinearLayout.LayoutParams(frameSizeShort, frameSizeLong)
         }
 
         val seekBar = SeekBar(this).apply {
+            tag = "seekbar"
             max = maxVal
             progress = initialProgress
             layoutParams = FrameLayout.LayoutParams(frameSizeLong, frameSizeShort).apply {
@@ -159,6 +182,9 @@ class MainActivity : Activity() {
             rotation = 270f
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(s: SeekBar?, p: Int, f: Boolean) {
+                    if (isSpeed) {
+                        valueText?.text = String.format("%.1f", (p + 1) / 10.0f)
+                    }
                     onProgress(p)
                 }
                 override fun onStartTrackingTouch(s: SeekBar?) {}
@@ -168,6 +194,22 @@ class MainActivity : Activity() {
 
         frame.addView(seekBar)
         container.addView(frame)
+
+        if (isSpeed) {
+            val minusBtn = Button(this).apply {
+                text = "-"
+                setPadding(0, 0, 0, 0)
+                layoutParams = LinearLayout.LayoutParams(dp(40f), dp(40f))
+            }
+            container.addView(minusBtn)
+            minusBtn.setOnClickListener {
+                val sb = container.findViewWithTag<SeekBar>("seekbar")
+                if (sb.progress > 0) {
+                    sb.progress -= 1
+                }
+            }
+        }
+
         return container
     }
 }

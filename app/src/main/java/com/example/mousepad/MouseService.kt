@@ -226,19 +226,19 @@ class MouseService : AccessibilityService() {
 
     private fun createPointer() {
         pointerView = ImageView(this).apply {
-            // A more professional dot-in-circle cursor
-            val size = 50
+            // A more professional dot-in-circle cursor (Slimmed down)
+            val size = 30 // Reduced from 50
             val gradientDrawable = GradientDrawable().apply {
                 shape = GradientDrawable.OVAL
                 setColor(pointerIdleColor)
-                setStroke(3, Color.WHITE)
+                setStroke(2, Color.WHITE) // Thinner stroke
                 setSize(size, size)
             }
             setImageDrawable(gradientDrawable)
         }
 
         val params = WindowManager.LayoutParams(
-            60, 60,
+            40, 40, // Reduced from 60x60
             WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
             PixelFormat.TRANSLUCENT
@@ -471,8 +471,8 @@ class MouseService : AccessibilityService() {
     private fun performScrollAtPointer(dx: Float, dy: Float) {
         if (isDispatching) return
 
-        val startX = (pointerX + 30f).coerceIn(0f, screenWidth.toFloat())
-        val startY = (pointerY + 30f).coerceIn(0f, screenHeight.toFloat())
+        val startX = (pointerX + 20f).coerceIn(0f, screenWidth.toFloat())
+        val startY = (pointerY + 20f).coerceIn(0f, screenHeight.toFloat())
         // Scroll content the same direction the finger moved on the pad (touchpad-style).
         val scrollFactor = 3.0f
         val endX = (startX + dx * scrollFactor).coerceIn(0f, screenWidth.toFloat())
@@ -542,8 +542,8 @@ class MouseService : AccessibilityService() {
     private fun performLongPressAtPointer() {
         if (isDispatching) return
 
-        val startX = (pointerX + 30f).coerceIn(0f, screenWidth.toFloat())
-        val startY = (pointerY + 30f).coerceIn(0f, screenHeight.toFloat())
+        val startX = (pointerX + 20f).coerceIn(0f, screenWidth.toFloat())
+        val startY = (pointerY + 20f).coerceIn(0f, screenHeight.toFloat())
         dragCurX = startX
         dragCurY = startY
         dragTargetX = startX
@@ -673,9 +673,9 @@ class MouseService : AccessibilityService() {
     private fun dispatchTapAtPointer(durationMs: Long) {
         if (isDispatching) return
 
-        // Click at the center of the 60x60 pointer icon
-        val clickX = (pointerX + 30f).coerceIn(0f, screenWidth.toFloat())
-        val clickY = (pointerY + 30f).coerceIn(0f, screenHeight.toFloat())
+        // Click at the center of the 40x40 pointer icon
+        val clickX = (pointerX + 20f).coerceIn(0f, screenWidth.toFloat())
+        val clickY = (pointerY + 20f).coerceIn(0f, screenHeight.toFloat())
 
         val path = Path()
         path.moveTo(clickX, clickY)
