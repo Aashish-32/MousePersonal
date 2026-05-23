@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.mousepad.app-mergeDebugResources-27:/values-en-rXC/values-en-rXC.xml",
+            "outputFile": "com.example.mousepad.app-mergeDebugResources-26:/values-en-rXC/values-en-rXC.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\aaxis\\.gradle\\caches\\transforms-3\\d09e54ff04b72ba2b0d7f8f1c72e14a1\\transformed\\appcompat-1.6.1\\res\\values-en-rXC\\values-en-rXC.xml",
+                    "source": "C:\\Users\\Aashish32\\.gradle\\caches\\transforms-3\\898b7e34376c3b416b743068187b314a\\transformed\\appcompat-1.6.1\\res\\values-en-rXC\\values-en-rXC.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\aaxis\\.gradle\\caches\\transforms-3\\6346458949423eaa56e7eb4f452c114b\\transformed\\core-1.9.0\\res\\values-en-rXC\\values-en-rXC.xml",
+                    "source": "C:\\Users\\Aashish32\\.gradle\\caches\\transforms-3\\8ad3bea17fb93df5446b7b4697c20c81\\transformed\\core-1.9.0\\res\\values-en-rXC\\values-en-rXC.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

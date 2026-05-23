@@ -6,104 +6,108 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="24"
-8-->C:\mouseAPk\app\src\main\AndroidManifest.xml
+8-->E:\mouseAPk\app\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="33" />
-9-->C:\mouseAPk\app\src\main\AndroidManifest.xml
+9-->E:\mouseAPk\app\src\main\AndroidManifest.xml
 10
 11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-11-->C:\mouseAPk\app\src\main\AndroidManifest.xml:5:5-78
-11-->C:\mouseAPk\app\src\main\AndroidManifest.xml:5:22-75
+11-->E:\mouseAPk\app\src\main\AndroidManifest.xml:5:5-78
+11-->E:\mouseAPk\app\src\main\AndroidManifest.xml:5:22-75
 12    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-12-->C:\mouseAPk\app\src\main\AndroidManifest.xml:6:5-77
-12-->C:\mouseAPk\app\src\main\AndroidManifest.xml:6:22-74
-13
-14    <permission
-14-->[androidx.core:core:1.9.0] C:\Users\aaxis\.gradle\caches\transforms-3\6346458949423eaa56e7eb4f452c114b\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
-15        android:name="com.example.mousepad.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-15-->[androidx.core:core:1.9.0] C:\Users\aaxis\.gradle\caches\transforms-3\6346458949423eaa56e7eb4f452c114b\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
-16        android:protectionLevel="signature" />
-16-->[androidx.core:core:1.9.0] C:\Users\aaxis\.gradle\caches\transforms-3\6346458949423eaa56e7eb4f452c114b\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
-17
-18    <uses-permission android:name="com.example.mousepad.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-18-->[androidx.core:core:1.9.0] C:\Users\aaxis\.gradle\caches\transforms-3\6346458949423eaa56e7eb4f452c114b\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
-18-->[androidx.core:core:1.9.0] C:\Users\aaxis\.gradle\caches\transforms-3\6346458949423eaa56e7eb4f452c114b\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
-19
-20    <application
-20-->C:\mouseAPk\app\src\main\AndroidManifest.xml:8:5-35:19
-21        android:allowBackup="true"
-21-->C:\mouseAPk\app\src\main\AndroidManifest.xml:9:9-35
-22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-22-->[androidx.core:core:1.9.0] C:\Users\aaxis\.gradle\caches\transforms-3\6346458949423eaa56e7eb4f452c114b\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
-23        android:debuggable="true"
-24        android:extractNativeLibs="false"
-25        android:label="Mouse Pad Overlay"
-25-->C:\mouseAPk\app\src\main\AndroidManifest.xml:10:9-42
-26        android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" >
-26-->C:\mouseAPk\app\src\main\AndroidManifest.xml:11:9-77
-27        <activity
-27-->C:\mouseAPk\app\src\main\AndroidManifest.xml:13:9-20:20
-28            android:name="com.example.mousepad.MainActivity"
-28-->C:\mouseAPk\app\src\main\AndroidManifest.xml:14:13-41
-29            android:exported="true" >
-29-->C:\mouseAPk\app\src\main\AndroidManifest.xml:15:13-36
-30            <intent-filter>
-30-->C:\mouseAPk\app\src\main\AndroidManifest.xml:16:13-19:29
-31                <action android:name="android.intent.action.MAIN" />
-31-->C:\mouseAPk\app\src\main\AndroidManifest.xml:17:17-69
-31-->C:\mouseAPk\app\src\main\AndroidManifest.xml:17:25-66
-32
-33                <category android:name="android.intent.category.LAUNCHER" />
-33-->C:\mouseAPk\app\src\main\AndroidManifest.xml:18:17-77
-33-->C:\mouseAPk\app\src\main\AndroidManifest.xml:18:27-74
-34            </intent-filter>
-35        </activity>
-36
-37        <service
-37-->C:\mouseAPk\app\src\main\AndroidManifest.xml:22:9-33:19
-38            android:name="com.example.mousepad.MouseService"
-38-->C:\mouseAPk\app\src\main\AndroidManifest.xml:23:13-41
-39            android:exported="true"
-39-->C:\mouseAPk\app\src\main\AndroidManifest.xml:24:13-36
-40            android:label="Mouse Pad Service"
-40-->C:\mouseAPk\app\src\main\AndroidManifest.xml:25:13-46
-41            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
-41-->C:\mouseAPk\app\src\main\AndroidManifest.xml:26:13-79
-42            <intent-filter>
-42-->C:\mouseAPk\app\src\main\AndroidManifest.xml:27:13-29:29
-43                <action android:name="android.accessibilityservice.AccessibilityService" />
-43-->C:\mouseAPk\app\src\main\AndroidManifest.xml:28:17-92
-43-->C:\mouseAPk\app\src\main\AndroidManifest.xml:28:25-89
-44            </intent-filter>
-45
-46            <meta-data
-46-->C:\mouseAPk\app\src\main\AndroidManifest.xml:30:13-32:72
-47                android:name="android.accessibilityservice"
-47-->C:\mouseAPk\app\src\main\AndroidManifest.xml:31:17-60
-48                android:resource="@xml/accessibility_service_config" />
-48-->C:\mouseAPk\app\src\main\AndroidManifest.xml:32:17-69
-49        </service>
-50
-51        <provider
-51-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aaxis\.gradle\caches\transforms-3\425137d2385fa733430d35f8e5412112\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
-52            android:name="androidx.startup.InitializationProvider"
-52-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aaxis\.gradle\caches\transforms-3\425137d2385fa733430d35f8e5412112\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
-53            android:authorities="com.example.mousepad.androidx-startup"
-53-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aaxis\.gradle\caches\transforms-3\425137d2385fa733430d35f8e5412112\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
-54            android:exported="false" >
-54-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aaxis\.gradle\caches\transforms-3\425137d2385fa733430d35f8e5412112\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
-55            <meta-data
-55-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aaxis\.gradle\caches\transforms-3\425137d2385fa733430d35f8e5412112\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
-56                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-56-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aaxis\.gradle\caches\transforms-3\425137d2385fa733430d35f8e5412112\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
-57                android:value="androidx.startup" />
-57-->[androidx.emoji2:emoji2:1.2.0] C:\Users\aaxis\.gradle\caches\transforms-3\425137d2385fa733430d35f8e5412112\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
-58            <meta-data
-58-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\aaxis\.gradle\caches\transforms-3\b399f4708f364ad582a1474412de327d\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
-59                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-59-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\aaxis\.gradle\caches\transforms-3\b399f4708f364ad582a1474412de327d\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
-60                android:value="androidx.startup" />
-60-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\aaxis\.gradle\caches\transforms-3\b399f4708f364ad582a1474412de327d\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
-61        </provider>
-62    </application>
-63
-64</manifest>
+12-->E:\mouseAPk\app\src\main\AndroidManifest.xml:6:5-77
+12-->E:\mouseAPk\app\src\main\AndroidManifest.xml:6:22-74
+13    <uses-permission android:name="android.permission.VIBRATE" />
+13-->E:\mouseAPk\app\src\main\AndroidManifest.xml:7:5-66
+13-->E:\mouseAPk\app\src\main\AndroidManifest.xml:7:22-63
+14
+15    <permission
+15-->[androidx.core:core:1.9.0] C:\Users\Aashish32\.gradle\caches\transforms-3\8ad3bea17fb93df5446b7b4697c20c81\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+16        android:name="com.example.mousepad.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+16-->[androidx.core:core:1.9.0] C:\Users\Aashish32\.gradle\caches\transforms-3\8ad3bea17fb93df5446b7b4697c20c81\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+17        android:protectionLevel="signature" />
+17-->[androidx.core:core:1.9.0] C:\Users\Aashish32\.gradle\caches\transforms-3\8ad3bea17fb93df5446b7b4697c20c81\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+18
+19    <uses-permission android:name="com.example.mousepad.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+19-->[androidx.core:core:1.9.0] C:\Users\Aashish32\.gradle\caches\transforms-3\8ad3bea17fb93df5446b7b4697c20c81\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+19-->[androidx.core:core:1.9.0] C:\Users\Aashish32\.gradle\caches\transforms-3\8ad3bea17fb93df5446b7b4697c20c81\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+20
+21    <application
+21-->E:\mouseAPk\app\src\main\AndroidManifest.xml:9:5-36:19
+22        android:allowBackup="true"
+22-->E:\mouseAPk\app\src\main\AndroidManifest.xml:10:9-35
+23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+23-->[androidx.core:core:1.9.0] C:\Users\Aashish32\.gradle\caches\transforms-3\8ad3bea17fb93df5446b7b4697c20c81\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+24        android:debuggable="true"
+25        android:extractNativeLibs="false"
+26        android:label="Mouse Pad Overlay"
+26-->E:\mouseAPk\app\src\main\AndroidManifest.xml:11:9-42
+27        android:testOnly="true"
+28        android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" >
+28-->E:\mouseAPk\app\src\main\AndroidManifest.xml:12:9-77
+29        <activity
+29-->E:\mouseAPk\app\src\main\AndroidManifest.xml:14:9-21:20
+30            android:name="com.example.mousepad.MainActivity"
+30-->E:\mouseAPk\app\src\main\AndroidManifest.xml:15:13-41
+31            android:exported="true" >
+31-->E:\mouseAPk\app\src\main\AndroidManifest.xml:16:13-36
+32            <intent-filter>
+32-->E:\mouseAPk\app\src\main\AndroidManifest.xml:17:13-20:29
+33                <action android:name="android.intent.action.MAIN" />
+33-->E:\mouseAPk\app\src\main\AndroidManifest.xml:18:17-69
+33-->E:\mouseAPk\app\src\main\AndroidManifest.xml:18:25-66
+34
+35                <category android:name="android.intent.category.LAUNCHER" />
+35-->E:\mouseAPk\app\src\main\AndroidManifest.xml:19:17-77
+35-->E:\mouseAPk\app\src\main\AndroidManifest.xml:19:27-74
+36            </intent-filter>
+37        </activity>
+38
+39        <service
+39-->E:\mouseAPk\app\src\main\AndroidManifest.xml:23:9-34:19
+40            android:name="com.example.mousepad.MouseService"
+40-->E:\mouseAPk\app\src\main\AndroidManifest.xml:24:13-41
+41            android:exported="true"
+41-->E:\mouseAPk\app\src\main\AndroidManifest.xml:25:13-36
+42            android:label="Mouse Pad Service"
+42-->E:\mouseAPk\app\src\main\AndroidManifest.xml:26:13-46
+43            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+43-->E:\mouseAPk\app\src\main\AndroidManifest.xml:27:13-79
+44            <intent-filter>
+44-->E:\mouseAPk\app\src\main\AndroidManifest.xml:28:13-30:29
+45                <action android:name="android.accessibilityservice.AccessibilityService" />
+45-->E:\mouseAPk\app\src\main\AndroidManifest.xml:29:17-92
+45-->E:\mouseAPk\app\src\main\AndroidManifest.xml:29:25-89
+46            </intent-filter>
+47
+48            <meta-data
+48-->E:\mouseAPk\app\src\main\AndroidManifest.xml:31:13-33:72
+49                android:name="android.accessibilityservice"
+49-->E:\mouseAPk\app\src\main\AndroidManifest.xml:32:17-60
+50                android:resource="@xml/accessibility_service_config" />
+50-->E:\mouseAPk\app\src\main\AndroidManifest.xml:33:17-69
+51        </service>
+52
+53        <provider
+53-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Aashish32\.gradle\caches\transforms-3\977cacc32260b1d3c988c36dbd145b90\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+54            android:name="androidx.startup.InitializationProvider"
+54-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Aashish32\.gradle\caches\transforms-3\977cacc32260b1d3c988c36dbd145b90\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+55            android:authorities="com.example.mousepad.androidx-startup"
+55-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Aashish32\.gradle\caches\transforms-3\977cacc32260b1d3c988c36dbd145b90\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+56            android:exported="false" >
+56-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Aashish32\.gradle\caches\transforms-3\977cacc32260b1d3c988c36dbd145b90\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+57            <meta-data
+57-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Aashish32\.gradle\caches\transforms-3\977cacc32260b1d3c988c36dbd145b90\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+58                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+58-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Aashish32\.gradle\caches\transforms-3\977cacc32260b1d3c988c36dbd145b90\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+59                android:value="androidx.startup" />
+59-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Aashish32\.gradle\caches\transforms-3\977cacc32260b1d3c988c36dbd145b90\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+60            <meta-data
+60-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Aashish32\.gradle\caches\transforms-3\33559f92c3896aeea32083073cf2e0a5\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+61                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+61-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Aashish32\.gradle\caches\transforms-3\33559f92c3896aeea32083073cf2e0a5\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+62                android:value="androidx.startup" />
+62-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Aashish32\.gradle\caches\transforms-3\33559f92c3896aeea32083073cf2e0a5\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+63        </provider>
+64    </application>
+65
+66</manifest>
