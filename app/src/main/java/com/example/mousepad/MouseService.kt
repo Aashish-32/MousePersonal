@@ -313,8 +313,6 @@ class MouseService : AccessibilityService() {
         addSysButton(sysBar, "Back") { performGlobalAction(GLOBAL_ACTION_BACK) }
         addSysButton(sysBar, "Home") { performGlobalAction(GLOBAL_ACTION_HOME) }
         addSysButton(sysBar, "Recent") { performGlobalAction(GLOBAL_ACTION_RECENTS) }
-        addSysButton(sysBar, "Notif") { performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS) }
-        addSysButton(sysBar, "QS") { performGlobalAction(GLOBAL_ACTION_QUICK_SETTINGS) }
         root.addView(sysBar, sysBarParams)
 
         mousePadView = root
@@ -599,32 +597,43 @@ class MouseService : AccessibilityService() {
 
     private fun keyboardRows(): List<List<String>> = when (keyboardMode) {
         1 -> listOf(
-            listOf("1","2","3","4","5"),
-            listOf("6","7","8","9","0"),
-            listOf(".",",","!","?","@"),
+            listOf("1","2","3"),
+            listOf("4","5","6"),
+            listOf("7","8","9"),
+            listOf(".","0",","),
+            listOf("!","?","@"),
             listOf("ABC","Sym","Hide"),
             listOf("Del","Space","Enter")
         )
         2 -> listOf(
-            listOf("@","#","$","%","&"),
-            listOf("*","-","+","(",")"),
-            listOf("<",">","[","]","{"),
-            listOf("}","_","\\","/","|"),
-            listOf("!","?","'","\"",":"),
+            listOf("@","#","$"),
+            listOf("%","&","*"),
+            listOf("-","+","="),
+            listOf("(",")","/"),
+            listOf("[","]","\\"),
+            listOf("{","}","|"),
+            listOf("<",">","~"),
+            listOf("'","\"","`"),
+            listOf(":",";","_"),
             listOf("ABC","123","Hide"),
             listOf("Del","Space","Enter")
         )
         else -> {
             val cap = isCapsLock
             fun L(s: String) = if (cap) s else s.lowercase()
+            // Letters listed in QWERTY order, then chunked 3-per-row to keep the
+            // keyboard narrow enough to stay inside the working right-strip.
             listOf(
-                listOf(L("Q"),L("W"),L("E"),L("R"),L("T")),
-                listOf(L("Y"),L("U"),L("I"),L("O"),L("P")),
-                listOf(L("A"),L("S"),L("D"),L("F"),L("G")),
-                listOf(L("H"),L("J"),L("K"),L("L")),
-                listOf(L("Z"),L("X"),L("C"),L("V"),L("B")),
-                listOf(L("N"),L("M")),
-                listOf("Caps","123","Sym","Hide"),
+                listOf(L("Q"),L("W"),L("E")),
+                listOf(L("R"),L("T"),L("Y")),
+                listOf(L("U"),L("I"),L("O")),
+                listOf(L("P"),L("A"),L("S")),
+                listOf(L("D"),L("F"),L("G")),
+                listOf(L("H"),L("J"),L("K")),
+                listOf(L("L"),L("Z"),L("X")),
+                listOf(L("C"),L("V"),L("B")),
+                listOf(L("N"),L("M"),"Caps"),
+                listOf("123","Sym","Hide"),
                 listOf("Del","Space","Enter")
             )
         }
@@ -698,7 +707,7 @@ class MouseService : AccessibilityService() {
 
         keyboardView = scroll
         val params = WindowManager.LayoutParams(
-            280,
+            200,
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
