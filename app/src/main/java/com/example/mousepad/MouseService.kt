@@ -917,13 +917,19 @@ class MouseService : AccessibilityService() {
 
     private fun getActualText(node: AccessibilityNodeInfo): String {
         val text = node.text ?: return ""
+        val textStr = text.toString()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val hint = node.hintText
-            if (hint != null && text.toString() == hint.toString()) {
+            val hint = node.hintText?.toString()
+            if (hint != null && textStr.trim() == hint.trim()) {
                 return ""
             }
         }
-        return text.toString()
+        // Fallback: Some apps use contentDescription as a hint when empty
+        val cd = node.contentDescription?.toString()
+        if (cd != null && textStr.trim() == cd.trim()) {
+            return ""
+        }
+        return textStr
     }
 
     private fun deleteAtCaret(node: AccessibilityNodeInfo) {
