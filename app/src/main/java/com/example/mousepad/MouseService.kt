@@ -66,6 +66,15 @@ class MouseService : AccessibilityService() {
         }
     }
 
+    // Long-press drag state — held while a continueStroke chain is in flight.
+    private var dragInProgress = false
+    private var dragLastStroke: GestureDescription.StrokeDescription? = null
+    private var dragCurX = 0f
+    private var dragCurY = 0f
+    private var dragTargetX = 0f
+    private var dragTargetY = 0f
+    private var dragEnding = false
+
     private var currentTransparency = 128
     private var currentSize = 400
     private var currentSensitivity = 2.0f
@@ -383,6 +392,10 @@ class MouseService : AccessibilityService() {
                     pointerX += acceleratedDelta(dx) * currentSensitivity
                     pointerY += acceleratedDelta(dy) * currentSensitivity
                     updatePointerPosition()
+                    if (dragInProgress) {
+                        dragTargetX = (pointerX + 30f).coerceIn(0f, screenWidth.toFloat())
+                        dragTargetY = (pointerY + 30f).coerceIn(0f, screenHeight.toFloat())
+                    }
                 }
 
                 lastX = event.rawX
@@ -397,7 +410,10 @@ class MouseService : AccessibilityService() {
                 val isTap = movedDistSq < tapSlopPx * tapSlopPx &&
                         event.eventTime - event.downTime < 250
 
-                if (event.action == MotionEvent.ACTION_UP) {
+                if (dragInProgress) {
+                    // Release the long-press drag whether finger moved or not.
+                    endLongPressDrag()
+                } else if (event.action == MotionEvent.ACTION_UP) {
                     if (isTap && !longPressFired) {
                         when {
                             event.y < 120 && event.x > currentSize - 100 -> {
@@ -524,9 +540,126 @@ class MouseService : AccessibilityService() {
     }
 
     private fun performLongPressAtPointer() {
-        // Long-press / "right-click": hold gesture long enough to trigger context menus.
+        if (isDispatching) return
+
+        val startX = (pointerX + 30f).coerceIn(0f, screenWidth.toFloat())
+        val startY = (pointerY + 30f).coerceIn(0f, screenHeight.toFloat())
+        dragCurX = startX
+        dragCurY = startY
+        dragTargetX = startX
+        dragTargetY = startY
+        dragEnding = false
+
+        val canContinue = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+
+        val path = Path()
+        path.moveTo(startX, startY)
+        path.lineTo(startX, startY)
+
+        val stroke = if (canContinue) {
+            GestureDescription.StrokeDescription(path, 0L, 600L, true)
+        } else {
+            GestureDescription.StrokeDescription(path, 0L, 600L)
+        }
+
+        val gesture = GestureDescription.Builder().addStroke(stroke).build()
         flashPointer(pointerLongPressColor, 650L)
-        dispatchTapAtPointer(durationMs = 600L)
+        isDispatching = true
+
+        val ok = dispatchGesture(gesture, if (canContinue) dragCallback else simpleCallback, null)
+        if (!ok) {
+            isDispatching = false
+            return
+        }
+
+        if (canContinue) {
+            dragInProgress = true
+            dragLastStroke = stroke
+        }
+    }
+
+    private val simpleCallback = object : GestureResultCallback() {
+        override fun onCompleted(g: GestureDescription?) { isDispatching = false; super.onCompleted(g) }
+        override fun onCancelled(g: GestureDescription?) { isDispatching = false; super.onCancelled(g) }
+    }
+
+    // Callback that chains continuation strokes to keep the drag press held and following the pointer.
+    private val dragCallback = object : GestureResultCallback() {
+        override fun onCompleted(g: GestureDescription?) {
+            super.onCompleted(g)
+            isDispatching = false
+            if (!dragInProgress) return
+            if (dragEnding) dispatchDragFinal() else dispatchDragContinuation()
+        }
+        override fun onCancelled(g: GestureDescription?) {
+            super.onCancelled(g)
+            isDispatching = false
+            dragInProgress = false
+            dragEnding = false
+            dragLastStroke = null
+        }
+    }
+
+    private fun dispatchDragContinuation() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+        if (!dragInProgress) return
+        val last = dragLastStroke ?: return
+
+        val toX = dragTargetX
+        val toY = dragTargetY
+        val path = Path()
+        path.moveTo(dragCurX, dragCurY)
+        path.lineTo(toX, toY)
+
+        val newStroke = try {
+            last.continueStroke(path, 0L, 100L, true)
+        } catch (e: Exception) {
+            dragInProgress = false; dragLastStroke = null; return
+        }
+
+        val gesture = GestureDescription.Builder().addStroke(newStroke).build()
+        isDispatching = true
+        val ok = dispatchGesture(gesture, dragCallback, null)
+        if (!ok) {
+            isDispatching = false; dragInProgress = false; dragLastStroke = null; return
+        }
+        dragLastStroke = newStroke
+        dragCurX = toX
+        dragCurY = toY
+    }
+
+    private fun dispatchDragFinal() {
+        val last = dragLastStroke
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O || last == null) {
+            dragInProgress = false; dragEnding = false; dragLastStroke = null; return
+        }
+
+        val toX = dragTargetX
+        val toY = dragTargetY
+        val path = Path()
+        path.moveTo(dragCurX, dragCurY)
+        path.lineTo(toX, toY)
+
+        val finalStroke = try {
+            last.continueStroke(path, 0L, 100L, false)
+        } catch (e: Exception) {
+            dragInProgress = false; dragEnding = false; dragLastStroke = null; return
+        }
+
+        val gesture = GestureDescription.Builder().addStroke(finalStroke).build()
+        isDispatching = true
+        dispatchGesture(gesture, simpleCallback, null)
+
+        dragInProgress = false
+        dragEnding = false
+        dragLastStroke = null
+    }
+
+    private fun endLongPressDrag() {
+        if (!dragInProgress) return
+        // If a continuation is in flight, let its callback fire the final stroke.
+        // Otherwise dispatch immediately.
+        if (isDispatching) dragEnding = true else dispatchDragFinal()
     }
 
     private fun flashPointer(color: Int, durationMs: Long) {
@@ -782,8 +915,19 @@ class MouseService : AccessibilityService() {
         }
     }
 
+    private fun getActualText(node: AccessibilityNodeInfo): String {
+        val text = node.text ?: return ""
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val hint = node.hintText
+            if (hint != null && text.toString() == hint.toString()) {
+                return ""
+            }
+        }
+        return text.toString()
+    }
+
     private fun deleteAtCaret(node: AccessibilityNodeInfo) {
-        val currentText = node.text?.toString() ?: ""
+        val currentText = getActualText(node)
         if (currentText.isEmpty()) return
 
         val range = selectionRange(node, currentText.length)
@@ -803,7 +947,7 @@ class MouseService : AccessibilityService() {
     }
 
     private fun appendText(node: AccessibilityNodeInfo, text: String) {
-        val currentText = node.text?.toString() ?: ""
+        val currentText = getActualText(node)
         val range = selectionRange(node, currentText.length)
         val (newText, newCaret) = if (range != null) {
             val combined = currentText.substring(0, range.first) + text + currentText.substring(range.last)
